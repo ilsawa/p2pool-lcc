@@ -16,7 +16,11 @@ RPC_CHECK = defer.inlineCallbacks(lambda bitcoind: defer.returnValue(
             (yield helper.check_block_header(bitcoind, '00000000de1e4e93317241177b5f1d72fc151c6e76815e9b0be4961dfd309d60')) and # LitecoinCash: Premine block
             (yield bitcoind.rpc_getblockchaininfo())['chain'] != 'test'
         ))
-SUBSIDY_FUNC = lambda height: 50*100000000*10 >> (height + 1)//840000
+SUBSIDY_FUNC = lambda height: (
+        0 if height <= 1371112 or height >= 6215968 or height / 840000 >= 64 else
+        50*100000000*10 >> height//840000 if height-1371112 > 2000 else
+        (height-1371111) * ((50*100000000*10)/2000) >> height//840000
+        )
 POW_FUNC = data.hash256
 BLOCK_PERIOD = 150 # s
 SYMBOL = 'LCC'
@@ -26,4 +30,4 @@ ADDRESS_EXPLORER_URL_PREFIX = 'https://explorer.litecoinca.sh/address/'
 TX_EXPLORER_URL_PREFIX = 'https://explorer.litecoinca.sh/tx/'
 SANE_TARGET_RANGE = (2**256//2**32//1000000 - 1, 2**256//2**32 - 1)
 DUMB_SCRYPT_DIFF = 1
-DUST_THRESHOLD = 0.001e8
+DUST_THRESHOLD = 0.001e7

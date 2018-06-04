@@ -1,19 +1,19 @@
 from p2pool.bitcoin import networks
 
 PARENT = networks.nets['litecoincash']
-SHARE_PERIOD = 25 # seconds
+SHARE_PERIOD = 20 # seconds
 CHAIN_LENGTH = 24*60*60//10 # shares
 REAL_CHAIN_LENGTH = 24*60*60//10 # shares
-TARGET_LOOKBEHIND = 200 # shares
+TARGET_LOOKBEHIND = 150 # shares
 SPREAD = 7 # blocks
-IDENTIFIER = '1c01746cfe4641d3'.decode('hex')
-PREFIX = '1c01746cfeded854'.decode('hex')
+IDENTIFIER = '110a463717b751fd'.decode('hex')
+PREFIX = 'dd5c11effc962530'.decode('hex')
 P2P_PORT = 5054
 MIN_TARGET = 0
-MAX_TARGET = 2**256//2**32 - 1
+MAX_TARGET = 2**256//2**20 - 1
 PERSIST = True
 WORKER_PORT = 5055
-BOOTSTRAP_ADDRS = 'crypto.office-on-the.net siberia.mine.nu'.split(' ')
+BOOTSTRAP_ADDRS = 'crypto.office-on-the.net siberia.mine.nu p2p-a.minelcc.net:62468 p2p-b.minelcc.net:62468 p2p-c.minelcc.net:62468'.split(' ')
 ANNOUNCE_CHANNEL = '#p2pool-lcc'
 VERSION_CHECK = lambda v: None if 150001 <= v else 'LitecoinCash version too old. Upgrade to 0.15.0.1 or newer!'
 VERSION_WARNING = lambda v: None
